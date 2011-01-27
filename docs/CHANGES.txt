@@ -1,0 +1,68 @@
+2003-09-18
+- Added License.java as license template suggestion
+- Added test case and fixed "exception when adding windows to unshown layout pane" bug
+- Added test case and fixed "extra activate event for hidden window" bug
+- Renamed LayoutWindowListener#layoutWindowShown to ...Showing.
+- Renamed LayoutWindowListener#layoutWindowClosing to ...Hiding.
+- Rearranged LayoutWindowListener methods to match the window lifecycle.
+- Added test case CCTests#test07 for LayoutWindowListener#layoutWindowChanged events
+- Made RLayoutManagerException a public API class
+- Implemented LayoutWindowListener#layoutWindowClosed as new event for 
+  closeLayoutWindow() and fixed LMTests according to the new spec and added new test
+- Implemented Auto Hide Item open delay
+- Added two test cases to AVTests for Auto Hide Item delay, fixed all other tests
+- Implemented "click immediately hides shown auto hide pane"  with global AWT listener
+- Added test case to AVTests to prove that click on Auto Hide Item will immedialtly show
+  it and will activate the window
+  
+2003-09-20
+- Renamed LayoutWindowListener#layoutWindowShowing back to ...Shown.
+- Included new TestFrame app
+- Added test case and fixed "adding dockable windows to unshown layout pane to
+  other sides then left after a left window had been added" bug
+- Change RLayoutManager#showWindowSet to hide shown windows not included in the set
+
+2003-09-21
+- Reverted RLayoutManager#showWindowSet change
+- Added LayoutWindow#setActiveComponent()
+- Added LayoutManager#floatDockableWindow() and LayoutManager#redockDockableWindow API
+
+2003-09-22
+- Refactored Floating Frame
+- Implemented floating of dockable windows, respecting bounds
+- Simplified window focus handling
+- Fixed Auto Hide Item Pane activation bug
+
+2003-09-23
+- Fixed illegal state exception in updateBounds()
+- Created save/restore functionality
+- Created MFTest2 to test MF15 and MF16
+- Fixed Jemmy popup menu bug by adding workaround to JemmyTestCase
+- Fixed all outstanding test case bugs - with the exception of AV8 all test show green
+
+2003-09-24
+- Removed lastPaneToAdd variable
+- Added test cases for MF12, MF13, MF14
+- Added test cases for DC6 to 12 and fixed a bug for DC11
+- Added test cases for DWC20 to 27
+
+2003-09-25
+- Updated copyright comments
+- Added test case and fix for "when adding dockable windows to containers they resize"
+- Refactored RSplitPane
+- Fixed D&D background dragging (shouldn't work)
+- Fixed occasional float cursor while dragging tabs
+- Added test case and fix for "add/remove/add/getComponent" causes exception
+- Split of Document Container will use a weight of 0.5 now
+- Docking of Dockable Windows will use a weight of 0.25 now
+- Redocking Dockable Windows will use the existing width/height
+
+2003-09-26
+- Added LayoutWindow#show/hide/close and activate to public API
+- Changed WindowTests unit test to cover the new methods.
+- Modified JCloableTabbedPane to only optionally show its close button so that other
+  tabbedpanes can use it too and profit by its SCROLL_LAYOUT bug fixes
+- Refactored & documented RTabbedDocumentPane
+- Cleaned up dropOver listener with correct permit/forbid for all D&D operations
+- Cleaned up dropRequest methods
+- Fixed NPE when RSplitPane is drop target

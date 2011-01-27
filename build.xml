@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project basedir="." default="coverage" name="winsys"> 
+
+<property name="src.dir" value="src"/>
+<property name="bin.dir" value="build/bin"/>
+<property name="instbin.dir" value="build/inst-bin"/>
+<property name="report.dir" value="build/report"/>
+
+<property name="jemmy.lib" value="lib/jemmy.jar"/>
+<property name="junit.lib" value="lib/junit.jar"/>
+<property name="jcoverage.lib" value="c:/eclipse/plugins/com.jcoverage_1.0.5/jcoverage.jar"/>
+
+<target name="build" depends="compile, jar"/> 
+	
+<target name="compile">
+	<mkdir dir="${bin.dir}"/>
+	<javac destdir="${bin.dir}" srcdir="${src.dir}" debug="yes" deprecation="yes">
+		<classpath>
+			<pathelement location="${jemmy.lib}"/>
+			<pathelement location="${junit.lib}"/>
+		</classpath>
+	</javac>
+	<copy todir="${bin.dir}">
+		<fileset dir="${src.dir}">
+			<include name="**/*.png"/>
+		</fileset>
+	</copy>
+</target>
+
+<target name="jar" depends="compile">
+	<jar basedir="${bin.dir}" jarfile="layoutmgr.jar" manifest="manifest.mf" />
+</target>
+
+<target name="coverage" depends="compile">
+	<!-- instrument classes -->
+	<instrument todir="${instbin.dir}">
+		<fileset dir="${bin.dir}">
+			<include name="**/layout/*.class"/>
+			<include name="**/layout/impl/*.class"/>
+			<exclude name="**/RUI*.class"/>
+		</fileset>
+	</instrument>
+	
+	<!-- run junit -->
+	<junit fork="yes" dir="${basedir}" printsummary="yes">
+		<classpath location="${instbin.dir}"/>
+		<classpath location="${bin.dir}"/>
+		<classpath location="${jemmy.lib}"/>
+		<classpath location="${jcoverage.lib}"/>
+		
+		<test name="com.sun.winsys.test.AllTests"/>
+		<!--
+		<test name="com.sun.winsys.test.MCTests"/>
+		<test name="com.sun.winsys.test.MFTests"/>
+		<test name="com.sun.winsys.test.LMTests"/>
+		<test name="com.sun.winsys.test.DCTests"/>
+		<test name="com.sun.winsys.test.DWCTests"/>
+		<test name="com.sun.winsys.test.ACTests"/>
+		<test name="com.sun.winsys.test.AVTests"/>
+		<test name="com.sun.winsys.test.CCTests"/>
+		-->
+	</junit>
+
+	<!-- generate report -->
+	<report srcdir="${src.dir}" destdir="${report.dir}"/>
+</target>
+
+<target name="clean">
+	<delete dir="build"/>
+	<delete file="jcoverage.ser"/>
+</target> 
+
+</project>
